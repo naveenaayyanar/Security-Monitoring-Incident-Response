@@ -1,0 +1,46 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SOC Monitoring Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>🛡 Security Monitoring & Incident Response Dashboard</h1>
+
+    <div class="container">
+        <div class="box">
+            <h2>Log Analysis</h2>
+            <form action="/analyze" method="post">
+                <textarea name="logs" placeholder="Paste logs here..." required></textarea>
+                <button type="submit">Analyze Logs</button>
+            </form>
+        </div>
+
+        <div class="box">
+            <h2>Detected Alerts</h2>
+            {% if alerts %}
+                <table>
+                    <tr>
+                        <th>Type</th>
+                        <th>IP</th>
+                        <th>Severity</th>
+                        <th>Time</th>
+                    </tr>
+                    {% for alert in alerts %}
+                    <tr>
+                        <td>{{ alert.type }}</td>
+                        <td>{{ alert.ip }}</td>
+                        <td class="severity">{{ alert.severity }}</td>
+                        <td>{{ alert.time }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            {% else %}
+                <p>No alerts detected.</p>
+            {% endif %}
+            <a href="/clear"><button class="clear">Clear Alerts</button></a>
+        </div>
+    </div>
+</body>
+</html>
